@@ -1,0 +1,12 @@
+<div class="similarity-container">
+    <div class="text-area-container">
+        <textarea [(ngModel)]="text1" placeholder="Enter first text" rows="6" cols="30"></textarea>
+        <textarea [(ngModel)]="text2" placeholder="Enter second text" rows="6" cols="30"></textarea>        
+    </div>
+  
+    <button (click)="checkSimilarity()">Submit</button>
+  
+    <div *ngIf="similarityResult" class="result">
+      {{ similarityResult }}
+    </div>
+  </div>  

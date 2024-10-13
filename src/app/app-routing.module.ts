@@ -2,7 +2,7 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { ExtractionComponent } from './components/extraction/extraction.component';
-import { SimilarityComponentComponent } from './components/similarity-component/similarity-component.component';
+import { SimilarityComponent } from './components/similarity-component/similarity.component';
 import { DetectionComponent } from './components/detection/detection.component';
 import { SentimentComponent } from './components/sentiment/sentiment.component';
 
@@ -18,7 +18,7 @@ export const routes: Routes = [
   },
   {
     path: 'similarity',
-    component: SimilarityComponentComponent,
+    component: SimilarityComponent,
   },
   {
     path: 'detection',

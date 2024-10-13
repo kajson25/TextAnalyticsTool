@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 // import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SimilarityComponentComponent } from './components/similarity-component/similarity-component.component';
+import { SimilarityComponent} from './components/similarity-component/similarity.component';
 import { HomeComponent } from './components/home/home.component';
 import { ExtractionComponent } from './components/extraction/extraction.component';
 import { DetectionComponent } from './components/detection/detection.component';
@@ -13,7 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     // AppComponent,
-    SimilarityComponentComponent,
+    // SimilarityComponent,
     // HomeComponent,
     ExtractionComponent,
     DetectionComponent,
