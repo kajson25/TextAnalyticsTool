@@ -1,8 +1,6 @@
 <div class="sentiment-container">
-    <!-- Text input -->
     <textarea [(ngModel)]="text" placeholder="Enter text for sentiment analysis" rows="6" cols="40"></textarea>
-  
-    <!-- Language combobox -->
+
     <div class="language-selector">
       <label for="language">Select language: </label>
       <select id="language" [(ngModel)]="selectedLang">
@@ -11,11 +9,9 @@
         <option value="it">Italian</option>
       </select>
     </div>
-  
-    <!-- Submit button -->
+
     <button (click)="analyzeSentiment()">Submit</button>
-  
-    <!-- Result display -->
+
     <div *ngIf="sentimentScore !== null" class="result" [style.backgroundColor]="getSentimentGradient()">
       Sentiment Score: {{ sentimentScore.toFixed(2) }}
     </div>

@@ -1,36 +1,30 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';  // For ngModel
-import { CommonModule } from '@angular/common';  // For *ngIf and other common directives
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-sentiment',
   standalone: true,
-  imports: [FormsModule, CommonModule],  // Import FormsModule and CommonModule
+  imports: [FormsModule, CommonModule],
   templateUrl: './sentiment.component.html',
   styleUrls: ['./sentiment.component.css']
 })
 export class SentimentComponent {
-  text: string = '';  // Holds the input text from the textarea
-  selectedLang: string = 'auto';  // Default language option is 'auto'
-  sentimentScore: number | null = null;  // Holds the sentiment score (-1 to 1)
-  detectedLang: string = '';  // Holds the detected language for auto detection
-  errorMessage: string = '';  // Holds error messages for unsupported languages
-  apiKey: string = '929931ca479c4ad0b6375b2c6c78fcd8';  // Replace with your Dandelion API key
+  text: string = '';
+  selectedLang: string = 'auto';
+  sentimentScore: number | null = null;
+  detectedLang: string = '';
+  errorMessage: string = '';
+  apiKey: string = '929931ca479c4ad0b6375b2c6c78fcd8';
 
   constructor(private http: HttpClient) {}
 
-  // Method to detect language first and then perform sentiment analysis
   analyzeSentiment() {
     if (this.selectedLang === 'auto') {
       this.detectLanguage().then((detectedLang) => {
-        // if (detectedLang === 'en' || detectedLang === 'it') {
           this.detectedLang = detectedLang;
           this.performSentimentAnalysis(detectedLang);
-        // } else {
-        //   this.errorMessage = `Language '${detectedLang}' is not supported for sentiment analysis.`;
-        //   this.sentimentScore = null;
-        // }
       }).catch((error) => {
         console.error('Error detecting language', error);
         this.errorMessage = 'Error detecting language.';
@@ -63,7 +57,6 @@ export class SentimentComponent {
     });
   }
 
-  // Method to perform sentiment analysis via Dandelion API
   performSentimentAnalysis(language: string) {
     const url = `https://api.dandelion.eu/datatxt/sent/v1`;
     const params: any = {
@@ -74,12 +67,11 @@ export class SentimentComponent {
 
     console.log(params)
 
-    // Make the API call
     this.http.get<any>(url, { params }).subscribe(
       (response) => {
         console.log(response)
         this.sentimentScore = response.sentiment.score;
-        this.errorMessage = '';  // Clear error message if any
+        this.errorMessage = '';
       },
       (error) => {
         console.error('Error fetching sentiment analysis', error);
@@ -89,7 +81,6 @@ export class SentimentComponent {
     );
   }
 
-  // Method to calculate gradient color based on sentiment score
   getSentimentGradient(): string {
     if (this.sentimentScore === null) {
       return '';
