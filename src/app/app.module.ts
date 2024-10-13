@@ -8,12 +8,13 @@ import { HomeComponent } from './components/home/home.component';
 import { ExtractionComponent } from './components/extraction/extraction.component';
 import { DetectionComponent } from './components/detection/detection.component';
 import { SentimentComponent } from './components/sentiment/sentiment.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
     // AppComponent,
     SimilarityComponentComponent,
-    HomeComponent,
+    // HomeComponent,
     ExtractionComponent,
     DetectionComponent,
     SentimentComponent
@@ -23,6 +24,9 @@ import { SentimentComponent } from './components/sentiment/sentiment.component';
   //   AppRoutingModule
   // ],
   providers: [],
+  imports: [
+    BrowserAnimationsModule
+  ],
   // bootstrap: [AppComponent]
 })
 export class AppModule { }
