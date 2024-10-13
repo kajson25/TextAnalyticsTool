@@ -3,10 +3,10 @@
         <textarea [(ngModel)]="text1" placeholder="Enter first text" rows="6" cols="30"></textarea>
         <textarea [(ngModel)]="text2" placeholder="Enter second text" rows="6" cols="30"></textarea>        
     </div>
-  
+
     <button (click)="checkSimilarity()">Submit</button>
-  
+
     <div *ngIf="similarityResult" class="result">
-      {{ similarityResult }}
+        {{ similarityResult }}
     </div>
-  </div>  
+</div>  

@@ -1,1 +1,25 @@
-<p>detection works!</p>
+<div class="detection-container">
+    <!-- Text input -->
+    <textarea [(ngModel)]="text" placeholder="Enter text to detect language" rows="6" cols="40"></textarea>
+  
+    <!-- Clean checkbox -->
+    <div class="checkbox-container">
+      <label>
+        <input type="checkbox" [(ngModel)]="clean"> Clean (remove links, emails, hashtags)
+      </label>
+    </div>
+  
+    <!-- Submit button -->
+    <button (click)="detectLanguage()">Submit</button>
+  
+    <!-- Result display -->
+    <div *ngIf="detectedLanguages.length > 0" class="result">
+      <h3>Detected Languages:</h3>
+      <ul>
+        <li *ngFor="let lang of detectedLanguages">
+          {{ lang.lang }} - {{ lang.confidence.toFixed(2) }}% confidence
+        </li>
+      </ul>
+    </div>
+  </div>
+  
