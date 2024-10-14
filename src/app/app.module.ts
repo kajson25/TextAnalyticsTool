@@ -9,6 +9,7 @@ import { NgModule } from '@angular/core';
 // import { DetectionComponent } from './components/detection/detection.component';
 // import { SentimentComponent } from './components/sentiment/sentiment.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// import { TokenComponent } from './components/token/token.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     // ExtractionComponent,
     // DetectionComponent,
     // SentimentComponent
+  
+    // TokenComponent
   ],
   // imports: [
   //   BrowserModule,

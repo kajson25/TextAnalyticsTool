@@ -5,6 +5,7 @@ import { ExtractionComponent } from './components/extraction/extraction.componen
 import { SimilarityComponent } from './components/similarity-component/similarity.component';
 import { DetectionComponent } from './components/detection/detection.component';
 import { SentimentComponent } from './components/sentiment/sentiment.component';
+import { TokenComponent } from './components/token/token.component';
 
 
 export const routes: Routes = [
@@ -27,6 +28,10 @@ export const routes: Routes = [
   {
     path: 'sentiment',
     component: SentimentComponent,
+  },
+  {
+    path: 'token',
+    component: TokenComponent,
   },
 ];
 

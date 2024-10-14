@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-sentiment',
@@ -16,9 +17,9 @@ export class SentimentComponent {
   sentimentScore: number | null = null;
   detectedLang: string = '';
   errorMessage: string = '';
-  apiKey: string = '929931ca479c4ad0b6375b2c6c78fcd8';
+  apiKey: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private tokenService: TokenService) {}
 
   analyzeSentiment() {
     if (this.selectedLang === 'auto') {
@@ -36,6 +37,7 @@ export class SentimentComponent {
   }
 
   async detectLanguage(): Promise<string> {
+    this.apiKey = this.tokenService.getToken() || '';
     const url = `https://api.dandelion.eu/datatxt/li/v1`;
     const params = {
       text: this.text,

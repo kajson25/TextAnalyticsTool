@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-similarity',
@@ -14,11 +15,12 @@ export class SimilarityComponent {
   text1: string = '';
   text2: string = '';
   similarityResult: string = '';
-  apiKey: string = '929931ca479c4ad0b6375b2c6c78fcd8';
+  apiKey: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private tokenService: TokenService) {}
 
   checkSimilarity() {
+    this.apiKey = this.tokenService.getToken() || '';
     const url = `https://api.dandelion.eu/datatxt/sim/v1`;
     const params = {
       text1: this.text1,

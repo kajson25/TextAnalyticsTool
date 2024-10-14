@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-detection',
@@ -14,32 +15,28 @@ export class DetectionComponent {
   text: string = '';
   clean: boolean = false;
   detectedLanguages: { lang: string, confidence: number }[] = [];
-  apiKey: string = '929931ca479c4ad0b6375b2c6c78fcd8';
+  apiKey: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private tokenService: TokenService) {}
 
-  // Method to detect language via Dandelion API
   detectLanguage() {
+    this.apiKey = this.tokenService.getToken() || '';
     const url = `https://api.dandelion.eu/datatxt/li/v1`;
 
-    // Set up the parameters
     const params: any = {
       text: this.text,
       token: this.apiKey
     };
 
-    // Add the 'clean' parameter if the checkbox is checked
     if (this.clean) {
       params.clean = true;
     }
 
-    // Make the API call
     this.http.get<any>(url, { params }).subscribe(
       (response) => {
-        // Assuming response is a list of languages with confidence scores
         this.detectedLanguages = response.detectedLangs.map((langData: any) => ({
           lang: langData.lang,
-          confidence: langData.confidence * 100  // Convert confidence to percentage
+          confidence: langData.confidence * 100
         }));
       },
       (error) => {

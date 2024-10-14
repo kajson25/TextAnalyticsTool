@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-extraction',
@@ -17,17 +18,16 @@ export class ExtractionComponent {
     image: false,
     abstract: false,
     categories: false
-  };  // Object for checkboxes
-  extractedEntities: any[] = [];  // To hold the result from the API
-  apiKey: string = '929931ca479c4ad0b6375b2c6c78fcd8';  // Replace with your Dandelion API key
+  };
+  extractedEntities: any[] = [];
+  apiKey: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private tokenService: TokenService) {}
 
-  // Method to send entity extraction request to Dandelion API
   extractEntities() {
+    this.apiKey = this.tokenService.getToken() || '';
     const url = `https://api.dandelion.eu/datatxt/nex/v1`;
     
-    // Prepare the 'include' parameter based on checked options
     let includeParams = [];
     if (this.includeOptions.image) includeParams.push('image');
     if (this.includeOptions.abstract) includeParams.push('abstract');
@@ -39,16 +39,13 @@ export class ExtractionComponent {
       min_confidence: this.minConfidence
     };
 
-    // Add 'include' parameter if any options are selected
     if (includeParams.length > 0) {
       params.include = includeParams.join(',');
     }
 
-    // Make the API call
     this.http.get<any>(url, { params }).subscribe(
       (response) => {
-        // Handle the API response, store the entities
-        this.extractedEntities = response.annotations;  // Assuming 'annotations' contains the entity data
+        this.extractedEntities = response.annotations; 
       },
       (error) => {
         console.error('Error extracting entities', error);
