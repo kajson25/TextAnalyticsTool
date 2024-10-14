@@ -6,6 +6,7 @@ import { SimilarityComponent } from './components/similarity-component/similarit
 import { DetectionComponent } from './components/detection/detection.component';
 import { SentimentComponent } from './components/sentiment/sentiment.component';
 import { TokenComponent } from './components/token/token.component';
+import { LoggerComponent } from './components/logger/logger.component';
 
 
 export const routes: Routes = [
@@ -32,6 +33,10 @@ export const routes: Routes = [
   {
     path: 'token',
     component: TokenComponent,
+  },
+  {
+    path: 'logger',
+    component: LoggerComponent,
   },
 ];
 

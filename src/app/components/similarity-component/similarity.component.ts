@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TokenService } from 'src/app/services/token.service';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-similarity',
@@ -17,7 +18,7 @@ export class SimilarityComponent {
   similarityResult: string = '';
   apiKey: string = '';
 
-  constructor(private http: HttpClient, private tokenService: TokenService) {}
+  constructor(private http: HttpClient, private tokenService: TokenService, private logger: LoggerService) {}
 
   checkSimilarity() {
     this.apiKey = this.tokenService.getToken() || '';
@@ -27,6 +28,8 @@ export class SimilarityComponent {
       text2: this.text2,
       token: this.apiKey
     };
+
+    this.logger.log(url + params.text1 + params.text2)
 
     this.http.get<any>(url, { params }).subscribe(
       (response) => {

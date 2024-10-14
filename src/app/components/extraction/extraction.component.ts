@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TokenService } from 'src/app/services/token.service';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-extraction',
@@ -22,7 +23,7 @@ export class ExtractionComponent {
   extractedEntities: any[] = [];
   apiKey: string = '';
 
-  constructor(private http: HttpClient, private tokenService: TokenService) {}
+  constructor(private http: HttpClient, private tokenService: TokenService, private logger: LoggerService) {}
 
   extractEntities() {
     this.apiKey = this.tokenService.getToken() || '';
@@ -38,6 +39,8 @@ export class ExtractionComponent {
       token: this.apiKey,
       min_confidence: this.minConfidence
     };
+
+    this.logger.log(url + params.text + this.minConfidence)
 
     if (includeParams.length > 0) {
       params.include = includeParams.join(',');

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TokenService } from 'src/app/services/token.service';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-sentiment',
@@ -19,7 +20,7 @@ export class SentimentComponent {
   errorMessage: string = '';
   apiKey: string = '';
 
-  constructor(private http: HttpClient, private tokenService: TokenService) {}
+  constructor(private http: HttpClient, private tokenService: TokenService, private logger: LoggerService) {}
 
   analyzeSentiment() {
     if (this.selectedLang === 'auto') {
@@ -43,6 +44,7 @@ export class SentimentComponent {
       text: this.text,
       token: this.apiKey
     };
+    this.logger.log(url + params.text)
 
     return this.http.get<any>(url, { params }).toPromise().then((response) => {
       if (response.detectedLangs && response.detectedLangs.length > 0) {
@@ -68,6 +70,7 @@ export class SentimentComponent {
     };
 
     console.log(params)
+    this.logger.log(url + params.text)
 
     this.http.get<any>(url, { params }).subscribe(
       (response) => {

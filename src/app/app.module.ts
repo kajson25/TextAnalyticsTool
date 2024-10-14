@@ -9,6 +9,7 @@ import { NgModule } from '@angular/core';
 // import { DetectionComponent } from './components/detection/detection.component';
 // import { SentimentComponent } from './components/sentiment/sentiment.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoggerComponent } from './components/logger/logger.component';
 // import { TokenComponent } from './components/token/token.component';
 
 @NgModule({
@@ -21,6 +22,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     // SentimentComponent
   
     // TokenComponent
+  
+    // LoggerComponent
   ],
   // imports: [
   //   BrowserModule,
