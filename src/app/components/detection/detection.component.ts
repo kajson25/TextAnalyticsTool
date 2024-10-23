@@ -22,7 +22,6 @@ export class DetectionComponent implements OnInit {
   constructor(private http: HttpClient, private tokenService: TokenService, private logger: LoggerService) {}
 
   ngOnInit(): void {
-    // Check if the token is available
     if (!this.tokenService.isTokenAvailable()) {
       this.tokenMissing = true;
     }

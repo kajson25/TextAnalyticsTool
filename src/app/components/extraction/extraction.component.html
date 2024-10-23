@@ -1,24 +1,19 @@
 <div class="extraction-container" *ngIf="!tokenMissing; else tokenMissingMessage">
-    <!-- Text input -->
     <textarea [(ngModel)]="text" placeholder="Enter text to extract entities from" rows="6" cols="50"></textarea>
   
-    <!-- min_confidence slider -->
     <div class="confidence-slider">
       <label for="confidence">Minimum Confidence: {{ minConfidence }}</label>
       <input type="range" id="confidence" [(ngModel)]="minConfidence" min="0" max="1" step="0.01">
     </div>
   
-    <!-- Include checkboxes -->
     <div class="include-options">
       <label><input type="checkbox" [(ngModel)]="includeOptions.image"> Include Images</label>
       <label><input type="checkbox" [(ngModel)]="includeOptions.abstract"> Include Abstracts</label>
       <label><input type="checkbox" [(ngModel)]="includeOptions.categories"> Include Categories</label>
     </div>
   
-    <!-- Submit button -->
     <button (click)="extractEntities()">Extract Entities</button>
   
-    <!-- Display Results -->
     <div *ngIf="extractedEntities.length > 0" class="result">
       <h3>Extracted Entities:</h3>
       <ul>
