@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -12,15 +12,27 @@ import { LoggerService } from 'src/app/services/logger.service';
   templateUrl: './detection.component.html',
   styleUrls: ['./detection.component.css']
 })
-export class DetectionComponent {
+export class DetectionComponent implements OnInit {
   text: string = '';
   clean: boolean = false;
   detectedLanguages: { lang: string, confidence: number }[] = [];
   apiKey: string = '';
+  tokenMissing: boolean = false;
 
   constructor(private http: HttpClient, private tokenService: TokenService, private logger: LoggerService) {}
 
+  ngOnInit(): void {
+    // Check if the token is available
+    if (!this.tokenService.isTokenAvailable()) {
+      this.tokenMissing = true;
+    }
+  }
+
   detectLanguage() {
+    if (this.clean) {
+      this.text = this.cleanText(this.text);
+    }
+
     this.apiKey = this.tokenService.getToken() || '';
     const url = `https://api.dandelion.eu/datatxt/li/v1`;
 
@@ -29,11 +41,7 @@ export class DetectionComponent {
       token: this.apiKey
     };
 
-    this.logger.log(url + params.text)
-
-    if (this.clean) {
-      params.clean = true;
-    }
+    this.logger.log(url + params.text);
 
     this.http.get<any>(url, { params }).subscribe(
       (response) => {
@@ -47,5 +55,17 @@ export class DetectionComponent {
         this.detectedLanguages = [];
       }
     );
+  }
+
+  cleanText(text: string): string {
+    const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g;
+    const urlRegex = /https?:\/\/[^\s]+/g;
+    const hashtagRegex = /#[\w]+/g;
+
+    text = text.replace(emailRegex, '');
+    text = text.replace(urlRegex, '');
+    text = text.replace(hashtagRegex, '');
+
+    return text.trim();
   }
 }

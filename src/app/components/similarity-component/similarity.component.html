@@ -1,4 +1,4 @@
-<div class="similarity-container">
+<div class="similarity-container" *ngIf="!tokenMissing; else tokenMissingMessage">
     <div class="text-area-container">
         <textarea [(ngModel)]="text1" placeholder="Enter first text" rows="6" cols="30"></textarea>
         <textarea [(ngModel)]="text2" placeholder="Enter second text" rows="6" cols="30"></textarea>        
@@ -10,3 +10,10 @@
         {{ similarityResult }}
     </div>
 </div>  
+
+<ng-template #tokenMissingMessage>
+    <div class="alert alert-warning">
+        <h3>Access Denied</h3>
+        <p>You need to set the Dandelion API token to access this component.</p>
+    </div>
+</ng-template>

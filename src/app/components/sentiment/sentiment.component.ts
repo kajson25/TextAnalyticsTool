@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -12,15 +12,22 @@ import { LoggerService } from 'src/app/services/logger.service';
   templateUrl: './sentiment.component.html',
   styleUrls: ['./sentiment.component.css']
 })
-export class SentimentComponent {
+export class SentimentComponent implements OnInit {
   text: string = '';
   selectedLang: string = 'auto';
   sentimentScore: number | null = null;
   detectedLang: string = '';
   errorMessage: string = '';
   apiKey: string = '';
+  tokenMissing: boolean = false;
 
   constructor(private http: HttpClient, private tokenService: TokenService, private logger: LoggerService) {}
+
+  ngOnInit(): void {
+    if (!this.tokenService.isTokenAvailable()) {
+      this.tokenMissing = true;
+    }
+  }
 
   analyzeSentiment() {
     if (this.selectedLang === 'auto') {

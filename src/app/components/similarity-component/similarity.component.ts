@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -12,13 +12,20 @@ import { LoggerService } from 'src/app/services/logger.service';
   templateUrl: './similarity.component.html',
   styleUrls: ['./similarity.component.css']
 })
-export class SimilarityComponent {
+export class SimilarityComponent implements OnInit {
   text1: string = '';
   text2: string = '';
   similarityResult: string = '';
   apiKey: string = '';
+  tokenMissing: boolean = false;
 
   constructor(private http: HttpClient, private tokenService: TokenService, private logger: LoggerService) {}
+
+  ngOnInit(): void {
+    if (!this.tokenService.isTokenAvailable()) {
+      this.tokenMissing = true;
+    }
+  }
 
   checkSimilarity() {
     this.apiKey = this.tokenService.getToken() || '';

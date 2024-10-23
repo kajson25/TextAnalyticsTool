@@ -1,4 +1,4 @@
-<div class="extraction-container">
+<div class="extraction-container" *ngIf="!tokenMissing; else tokenMissingMessage">
     <!-- Text input -->
     <textarea [(ngModel)]="text" placeholder="Enter text to extract entities from" rows="6" cols="50"></textarea>
   
@@ -35,4 +35,10 @@
       </ul>
     </div>
   </div>
-  
+
+<ng-template #tokenMissingMessage>
+  <div class="alert alert-warning">
+    <h3>Access Denied</h3>
+    <p>You need to set the Dandelion API token to access this component.</p>
+  </div>
+</ng-template>

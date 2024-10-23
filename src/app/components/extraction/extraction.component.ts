@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -12,7 +12,7 @@ import { LoggerService } from 'src/app/services/logger.service';
   templateUrl: './extraction.component.html',
   styleUrls: ['./extraction.component.css']
 })
-export class ExtractionComponent {
+export class ExtractionComponent implements OnInit {
   text: string = '';
   minConfidence: number = 0.5;
   includeOptions: { image: boolean; abstract: boolean; categories: boolean } = {
@@ -22,8 +22,17 @@ export class ExtractionComponent {
   };
   extractedEntities: any[] = [];
   apiKey: string = '';
+  tokenMissing: boolean = false
 
   constructor(private http: HttpClient, private tokenService: TokenService, private logger: LoggerService) {}
+
+  ngOnInit(): void {
+    // Check if the token is available
+    if (!this.tokenService.isTokenAvailable()) {
+      this.tokenMissing = true;
+    }
+  }
+
 
   extractEntities() {
     this.apiKey = this.tokenService.getToken() || '';

@@ -1,4 +1,4 @@
-<div class="sentiment-container">
+<div class="sentiment-container" *ngIf="!tokenMissing; else tokenMissingMessage">
     <textarea [(ngModel)]="text" placeholder="Enter text for sentiment analysis" rows="6" cols="40"></textarea>
 
     <div class="language-selector">
@@ -16,4 +16,11 @@
       Sentiment Score: {{ sentimentScore.toFixed(2) }}
     </div>
 </div>
+
+<ng-template #tokenMissingMessage>
+  <div class="alert alert-warning">
+    <h3>Access Denied</h3>
+    <p>You need to set the Dandelion API token to access this component.</p>
+  </div>
+</ng-template>
   

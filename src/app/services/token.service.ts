@@ -17,4 +17,10 @@ export class TokenService {
   clearToken(): void {
     localStorage.removeItem(this.tokenKey);
   }
+
+  isTokenAvailable(): boolean {
+    const token = this.getToken();
+    return token !== null && token.trim() !== '';
+  }
 }
+
